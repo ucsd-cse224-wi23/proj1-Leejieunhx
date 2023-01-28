@@ -66,6 +66,9 @@ func handleConnection(conn net.Conn, write_only_channel chan<- []byte) {
 		buffer := make([]byte, 101)
 		bytesRead, err := conn.Read(buffer)
 		if err != nil {
+			if err == io.EOF {
+				continue
+			}
 			log.Fatal("Error raised when reading bytes:", err)
 			os.Exit(1)
 		}
